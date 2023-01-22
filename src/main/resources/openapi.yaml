@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Title
+  description: Title
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:8080/mywebapp'
+components:
+  schemas:
+    catObject:
+        type: object
+        properties:
+          name:
+            type: string
+          weight:
+            type: integer
+            minimum: 1
+            maximum: 25
+          isAngry:
+            type: boolean
+    catsObjects:
+      type: array
+      items:
+        $ref: "#/components/schemas/catObject"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+paths:
+  /cats:
+    get:
+      summary:  получить всех котов
+      description: Get All Cats
+      tags:
+        - Cats
+      operationId: getAllCats
+      responses:
+        '200':
+          description: Список котов
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/catsObjects"
+        'default':
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: создать кота
+      tags:
+        - Cats
+      operationId: createCat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/catObject"
+      responses:
+        '200':
+          description: Кот создан
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/catObject"
+  /cats/{id}:
+      get:
+        summary: получить кота по ID
+        description: Get Cat
+        tags:
+          - Cats
+        operationId: getCatById
+        parameters:
+          - name: cat_id
+            in: path
+            required: true
+            description: ID кота
+            schema:
+              type: string
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/catObject"
+      delete:
+        summary: удалить кота по ID
+        tags:
+          - Cats
+        operationId: deleteCatById
+        parameters:
+          - name: cat_id
+            in: path
+            required: true
+            description: ID кота
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Кот удален
+            content:
+              application/json: {}
+  /cat/{id}:
+    patch:
+      summary: обновить данные о коте
+      description: Update Cat
+      tags:
+        - Cats
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: cat
+          in: query
+          schema:
+            $ref: "#/components/schemas/catObject"
+
+      responses:
+        '200':
+          description: Cat updated
+
+  /cats1/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/catObject"
+
+
+
+
+  
