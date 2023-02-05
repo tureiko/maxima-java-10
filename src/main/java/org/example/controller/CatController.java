@@ -5,11 +5,13 @@ import org.example.service.CatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@RestController //вместо @ResponseBody
+@RequestMapping("/v1")
 public class CatController {
 
     @Autowired
@@ -35,6 +37,7 @@ public class CatController {
     @PutMapping("/cat/{id}")
     public ResponseEntity<Cat> update(@PathVariable Long id, @RequestBody Cat cat){
         boolean updated = catService.update(id,cat);
+
         return updated ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
 
 

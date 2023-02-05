@@ -35,7 +35,7 @@ components:
 paths:
   /cats:
     get:
-      summary:  получить всех котов
+      summary: Метод получения списка котов
       description: Get All Cats
       tags:
         - Cats
@@ -54,7 +54,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
     post:
-      summary: создать кота
+      summary: Метод создания кота
       tags:
         - Cats
       operationId: createCat
@@ -73,7 +73,7 @@ paths:
                 $ref: "#/components/schemas/catObject"
   /cats/{id}:
       get:
-        summary: получить кота по ID
+        summary: Метод получения кота по ID
         description: Get Cat
         tags:
           - Cats
@@ -93,7 +93,7 @@ paths:
                 schema:
                   $ref: "#/components/schemas/catObject"
       delete:
-        summary: удалить кота по ID
+        summary: Метод удаления кота по ID
         tags:
           - Cats
         operationId: deleteCatById
@@ -111,7 +111,7 @@ paths:
               application/json: {}
   /cat/{id}:
     patch:
-      summary: обновить данные о коте
+      summary: Метод обновления кота
       description: Update Cat
       tags:
         - Cats
